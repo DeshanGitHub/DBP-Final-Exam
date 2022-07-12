@@ -38,4 +38,12 @@ public class StudentController {
         return itemArrayList;
     }
 
+    public static boolean deleteStudent(String id) throws SQLException, ClassNotFoundException {
+        if (DbConnection.getInstance().getConnection().prepareStatement("DELETE FROM Student WHERE student_id='"+id+"'").executeUpdate()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

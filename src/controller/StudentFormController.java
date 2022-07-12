@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import db.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +33,8 @@ public class StudentFormController {
     public TableColumn colStudentContact;
     public TableColumn colStudentAddress;
     public TableColumn colStudentNIC;
+
+    int tableSelectedRow=-1;
 
     public void initialize(){
         try {
@@ -65,16 +68,17 @@ public class StudentFormController {
         loadTable();
     }
 
+    ObservableList<StudentTM> studentTMObservableList = FXCollections.observableArrayList();
     private void loadTable() throws SQLException, ClassNotFoundException {
-        ObservableList<StudentTM> studentTMObservableList = FXCollections.observableArrayList();
+
         studentTMObservableList.clear();
         ArrayList<Student> allStudent = StudentController.getAllStudents();
 
-        //int num=0;
+        int num=0;
 
         for (Student student:allStudent
         ) {
-            //num++;
+            num++;
             studentTMObservableList.add(new StudentTM(
                     student.getId(),student.getName(),student.getEmail(),student.getContact(),student.getAddress(),student.getNic()
             ));
@@ -82,4 +86,15 @@ public class StudentFormController {
         tblStudentTable.setItems(studentTMObservableList);
     }
 
+    public void deleteStudentOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if(tableSelectedRow==-1){
+            new Alert(Alert.AlertType.WARNING,"Please Select The Student From Table..").show();
+        }else {
+            StudentTM temp=studentTMObservableList.get(tableSelectedRow);
+            if(StudentController.deleteStudent(temp.getId())){
+                new Alert(Alert.AlertType.INFORMATION,"Item Deleted..").show();
+                loadTable();
+            }
+        }
+    }
 }

@@ -65,13 +65,18 @@
             <TableColumn fx:id="colStudentNIC" prefWidth="249.0" text="NIC" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnSaveId" buttonType="RAISED" layoutX="370.0" layoutY="505.0" onAction="#saveButtonOnAction" prefHeight="43.0" prefWidth="125.0" style="-fx-background-color: #2ecc71;" text="Save Student">
+      <JFXButton fx:id="btnSaveId" buttonType="RAISED" layoutX="70.0" layoutY="509.0" onAction="#saveButtonOnAction" prefHeight="43.0" prefWidth="125.0" style="-fx-background-color: #2ecc71;" text="Save Student">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="704.0" layoutY="509.0" onAction="#deleteStudentOnAction" prefHeight="43.0" prefWidth="137.0" style="-fx-background-color: #e67e22;" text="Delete Student">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
       </JFXButton>
    </children>
 </AnchorPane>
