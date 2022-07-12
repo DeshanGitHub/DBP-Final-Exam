@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -63,5 +64,10 @@
             <TableColumn prefWidth="216.0" text="NIC" />
         </columns>
       </TableView>
+      <JFXButton fx:id="btnSaveId" buttonType="RAISED" layoutX="370.0" layoutY="505.0" onAction="#saveButtonOnAction" prefHeight="43.0" prefWidth="125.0" style="-fx-background-color: #2ecc71;" text="Save Student">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
