@@ -106,3 +106,17 @@ CREATE TABLE IF NOT EXISTS Payment(
 
 SHOW TABLES;
 DESC Payment;
+
+
+INSERT INTO student VALUES
+    ('C01', 'Nimal', 'Nimal@yahoo.com' , '07643526763' , 'No:20 Galle', '345876345v' ),
+    ('C02', 'Sasanka', 'Sas@yahoo.com' , '07753332245' , 'No:30 panadura', '678345647v' );
+
+SELECT * FROM student;
+
+INSERT INTO teacher VALUES
+    ('T01', 'Asanka', '0987945v' , '07643346763' , 'No:20 Galle' ),
+    ('T02', 'Pushpika', '987456456v' , '07745332245' , 'Homagama' );
+
+SELECT * FROM teacher;
+
