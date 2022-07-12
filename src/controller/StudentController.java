@@ -5,7 +5,9 @@ import model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class StudentController {
 
@@ -20,6 +22,20 @@ public class StudentController {
         pstm.setObject(6, student.getNic());
 
         return pstm.executeUpdate() > 0;
+    }
+
+    public static ArrayList<Student> getAllStudents() throws SQLException, ClassNotFoundException {
+        PreparedStatement statement = DbConnection.getInstance().getConnection().prepareStatement("SELECT * FROM student");
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Student> itemArrayList=new ArrayList<>();
+
+        while (resultSet.next()){
+            itemArrayList.add(new Student(
+                    resultSet.getString(1),resultSet.getString(2),
+                    resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6)
+            ));
+        }
+        return itemArrayList;
     }
 
 }

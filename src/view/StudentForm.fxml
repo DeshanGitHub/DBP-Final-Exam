@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -54,20 +55,23 @@
       <JFXTextField fx:id="txtStudentContact" labelFloat="true" layoutX="609.0" layoutY="318.0" prefHeight="31.0" prefWidth="268.0" promptText="Enter Contact" />
       <JFXTextField fx:id="txtStudentAddress" labelFloat="true" layoutX="150.0" layoutY="409.0" prefHeight="31.0" prefWidth="268.0" promptText="Enter Address" />
       <JFXTextField fx:id="txtStudentNIC" labelFloat="true" layoutX="589.0" layoutY="409.0" prefHeight="31.0" prefWidth="268.0" promptText="Enter NIC" />
-      <TableView layoutX="92.0" layoutY="657.0" prefHeight="340.0" prefWidth="944.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TableView fx:id="tblStudentTable" layoutX="92.0" layoutY="657.0" prefHeight="340.0" prefWidth="883.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columns>
-          <TableColumn prefWidth="131.0" text="Student ID" />
-          <TableColumn prefWidth="149.0" text="Student Name" />
-            <TableColumn prefWidth="149.0" text="Email" />
-            <TableColumn prefWidth="149.0" text="Contact" />
-            <TableColumn prefWidth="149.0" text="Address" />
-            <TableColumn prefWidth="216.0" text="NIC" />
+          <TableColumn fx:id="colStudentId" prefWidth="131.0" text="Student ID" />
+          <TableColumn fx:id="colStudentName" prefWidth="149.0" text="Student Name" />
+            <TableColumn fx:id="colStudentEmail" prefWidth="149.0" text="Email" />
+            <TableColumn fx:id="colStudentContact" prefWidth="149.0" text="Contact" />
+            <TableColumn fx:id="colStudentAddress" prefWidth="116.0" text="Address" />
+            <TableColumn fx:id="colStudentNIC" prefWidth="249.0" text="NIC" />
         </columns>
       </TableView>
       <JFXButton fx:id="btnSaveId" buttonType="RAISED" layoutX="370.0" layoutY="505.0" onAction="#saveButtonOnAction" prefHeight="43.0" prefWidth="125.0" style="-fx-background-color: #2ecc71;" text="Save Student">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </AnchorPane>
