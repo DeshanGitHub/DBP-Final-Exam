@@ -60,12 +60,22 @@ public class StudentFormController {
         Student s = new Student(txtStudentId.getText(), txtStudentName.getText(), txtStudentEmail.getText(), txtStudentContact.getText(), txtStudentAddress.getText(), txtStudentNIC.getText());
 
         if (StudentController.saveStudent(s)) {
+            clearTextFields();
             new Alert(Alert.AlertType.INFORMATION, "Saved..").show();
         } else {
             new Alert(Alert.AlertType.WARNING, "Try Again..").show();
         }
 
         loadTable();
+    }
+
+    private void clearTextFields() {
+        txtStudentNIC.clear();
+        txtStudentName.clear();
+        txtSearch.clear();
+        txtStudentContact.clear();
+        txtStudentEmail.clear();
+        txtStudentAddress.clear();
     }
 
     //ObservableList<StudentTM> studentTMObservableList = FXCollections.observableArrayList();
@@ -145,5 +155,9 @@ public class StudentFormController {
         }else {
             new Alert(Alert.AlertType.WARNING,"Empty Result Set").show();
         }
+    }
+
+    public void refreshButtonOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        loadTable();
     }
 }
