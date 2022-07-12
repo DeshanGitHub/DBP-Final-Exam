@@ -32,6 +32,7 @@ public class StudentFormController {
     public TableColumn colStudentAddress;
     public TableColumn colStudentNIC;
     public TableColumn colDeleteStudent;
+    public JFXTextField txtSearch;
 
     int tableSelectedRow = -1;
 
@@ -105,4 +106,44 @@ public class StudentFormController {
 
     }
 
+    public void searchButtonOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        Student student = StudentController.getStudent(txtSearch.getText());
+
+        if(student!=null){
+
+            ObservableList<StudentTM> observableStudent = FXCollections.observableArrayList();
+
+            Button btn=new Button("Delete");
+            observableStudent.add(new StudentTM(
+                    student.getId(),student.getName(),student.getEmail(),student.getContact(),student.getAddress(),student.getNic(),btn
+            ));
+
+            btn.setOnAction((event)->{
+
+                ButtonType yes=new ButtonType("Yes",ButtonBar.ButtonData.OK_DONE);
+                ButtonType no=new ButtonType("No",ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure,You Want To Delete This Student?",yes,no);
+                alert.setTitle("Confirmation Alert");
+                Optional<ButtonType> result= alert.showAndWait();
+
+                if(result.orElse(no)==yes){
+                    try {
+                        StudentController.deleteStudent(student.getId());
+                        loadTable();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            });
+
+            tblStudentTable.setItems(observableStudent);
+
+        }else {
+            new Alert(Alert.AlertType.WARNING,"Empty Result Set").show();
+        }
+    }
 }
