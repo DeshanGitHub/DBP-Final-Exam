@@ -2,19 +2,17 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import db.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Student;
 import view.tm.StudentTM;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class StudentFormController {
     public JFXTextField txtStudentEmail;
@@ -33,10 +31,11 @@ public class StudentFormController {
     public TableColumn colStudentContact;
     public TableColumn colStudentAddress;
     public TableColumn colStudentNIC;
+    public TableColumn colDeleteStudent;
 
-    int tableSelectedRow=-1;
+    int tableSelectedRow = -1;
 
-    public void initialize(){
+    public void initialize() {
         try {
             loadTable();
         } catch (SQLException throwables) {
@@ -51,50 +50,59 @@ public class StudentFormController {
         colStudentContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         colStudentAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colStudentNIC.setCellValueFactory(new PropertyValueFactory<>("nic"));
+        colDeleteStudent.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
 
     }
 
     public void saveButtonOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        Student s=new Student(txtStudentId.getText(),txtStudentName.getText(),txtStudentEmail.getText(),txtStudentContact.getText(),txtStudentAddress.getText(),txtStudentNIC.getText());
+        Student s = new Student(txtStudentId.getText(), txtStudentName.getText(), txtStudentEmail.getText(), txtStudentContact.getText(), txtStudentAddress.getText(), txtStudentNIC.getText());
 
-        if(StudentController.saveStudent(s)){
+        if (StudentController.saveStudent(s)) {
             new Alert(Alert.AlertType.INFORMATION, "Saved..").show();
-        }
-        else{
+        } else {
             new Alert(Alert.AlertType.WARNING, "Try Again..").show();
         }
 
         loadTable();
     }
 
-    ObservableList<StudentTM> studentTMObservableList = FXCollections.observableArrayList();
+    //ObservableList<StudentTM> studentTMObservableList = FXCollections.observableArrayList();
     private void loadTable() throws SQLException, ClassNotFoundException {
+        ArrayList<Student> allStudents = StudentController.getAllStudents();
+        ObservableList<StudentTM> tmStudentList = FXCollections.observableArrayList();
 
-        studentTMObservableList.clear();
-        ArrayList<Student> allStudent = StudentController.getAllStudents();
-
-        int num=0;
-
-        for (Student student:allStudent
+        for (Student s : allStudents
         ) {
-            num++;
-            studentTMObservableList.add(new StudentTM(
-                    student.getId(),student.getName(),student.getEmail(),student.getContact(),student.getAddress(),student.getNic()
+            Button btn = new Button("Delete");
+            tmStudentList.add(new StudentTM(
+                    s.getId(), s.getName(), s.getEmail(), s.getContact(), s.getAddress(),
+                    s.getNic(), btn
             ));
+
+            btn.setOnAction((event) -> {
+
+                ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure,You Want To Delete This Student?", yes, no);
+                alert.setTitle("Confirmation Alert");
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.orElse(no) == yes) {
+                    try {
+                        StudentController.deleteStudent(s.getId());
+                        loadTable();
+                    } catch (SQLException | ClassNotFoundException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+
+            });
         }
-        tblStudentTable.setItems(studentTMObservableList);
+
+        tblStudentTable.setItems(tmStudentList);
+
     }
 
-    public void deleteStudentOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        if(tableSelectedRow==-1){
-            new Alert(Alert.AlertType.WARNING,"Please Select The Student From Table..").show();
-        }else {
-            StudentTM temp=studentTMObservableList.get(tableSelectedRow);
-            if(StudentController.deleteStudent(temp.getId())){
-                new Alert(Alert.AlertType.INFORMATION,"Item Deleted..").show();
-                loadTable();
-            }
-        }
-    }
 }

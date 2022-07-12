@@ -106,3 +106,47 @@ CREATE TABLE IF NOT EXISTS Payment(
 
 SHOW TABLES;
 DESC Payment;
+
+
+INSERT INTO student VALUES
+    ('C01', 'Nimal', 'Nimal@yahoo.com' , '07643526763' , 'No:20 Galle', '345876345v' ),
+    ('C02', 'Sasanka', 'Sas@yahoo.com' , '07753332245' , 'No:30 panadura', '678345647v' );
+
+SELECT * FROM student;
+
+INSERT INTO teacher VALUES
+    ('T01', 'Asanka', '0987945v' , '07643346763' , 'No:20 Galle' ),
+    ('T02', 'Pushpika', '987456456v' , '07745332245' , 'Homagama' );
+
+SELECT * FROM teacher;
+
+INSERT INTO subject VALUES
+    ('SU01', 'Engilsh', 65 , 'T01'  ),
+    ('SU02', 'Maths', 78.5 , 'T02'  );
+
+SELECT * FROM subject;
+
+INSERT INTO course VALUES
+    ('CO01', 'Engilsh Course', 40000.00 , 'Three Months', 'SU01' ),
+    ('CO02', 'Maths Course', 58000.00 , 'Four Moths', 'SU02'  );
+
+SELECT * FROM course;
+
+INSERT INTO intake VALUES
+    ('I01', '2023-03-01', 'abcd' , 'Test1', 'CO01' ),
+    ('I02', '2024-11-08', 'adcf' , 'Test2', 'CO02'  );
+
+SELECT * FROM intake;
+
+INSERT INTO registration VALUES
+    ('R01', '2020-04-01', 'C01' , 'I01' ),
+    ('R02', '2021-02-08', 'C02' , 'I02' );
+
+SELECT * FROM registration;
+
+INSERT INTO payment VALUES
+    ('P01', '2020-04-01', 90000 , 'R01' ),
+    ('P02', '2021-04-08', 35000 , 'R02' );
+
+SELECT * FROM payment;
+
